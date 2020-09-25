@@ -1,0 +1,335 @@
+@import url("fontawesome-all.min.css");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
+
+.error_message {
+	border-radius: px;
+	border: 1;
+	background:  ;
+	font-size:15px;
+	color:#EE0000:
+	margin:10px;
+}
+
+.image_temp {
+	border-radius: px;
+	border: 1;
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 90px;
+	background: #F2F2F2 ;
+	color:black:
+	margin:10px;
+}
+/*　パンくずリスト*/
+.pankuzu_list {
+	border-radius: px;
+	border: 1;
+	display: inline-block;
+	position: relative;
+	width: 90%;
+	height: 30px;
+	margin:10px;
+	background: #F2F2F2 ;
+	font-size:15px;
+	color:black:
+	margin:10px;
+}
+
+.table1 {
+	border: 0px solid gray;
+	background-color: white;
+	width:100%;
+	height:70px;
+	font-size:20px;
+}
+
+.table1 th, .table1 td {
+	border: 3px solid gray;
+	width:20%;
+	text-align:center;
+	color: #4acaa8;
+	font-size: 1em;
+	font-weight:bold;
+}
+
+.table2 th, .table2 td {
+	border: 0px solid gray;
+	width:20%;
+	text-align:center;
+	color:;
+}
+
+.current_tab{
+	color:#00FF33;
+	background-color: #F2F2F2;
+
+}
+
+/* 入力フォーム */
+/*  */
+.table3 {
+	border: 0px solid gray;
+	background-color: white;
+}
+
+.table3 th, .table3 td {
+	border: 0px solid gray;
+	width:%;
+	text-align:center;
+
+	/*
+	padding-top:20px;
+	height:60px;
+	vertical-align:center;
+	padding-bottom:10px;
+	*/
+
+}
+
+/* 一覧情報 */
+/*  */
+.table-info {
+	border: 1px solid gray;
+	background-color: white;
+}
+
+.table-info th, .table-info td {
+	border: 1px solid gray;
+	font-size:15px;
+	width: 15%;
+	text-align:center;
+	background-color: white;
+
+}
+
+.table_line {
+	display: table;
+	width: 100%;
+}
+
+.block {
+	display: table-cell;
+	border: solid 1px silver;
+	font-size:15px;
+	width:15%;
+	height:8px;
+	padding-left:5px;
+	text-align:left;
+	background-color: white;
+}
+
+
+.block0 {
+	display: table-cell;
+	border: solid 1px silver;
+	font-size:15px;
+	font-weight:bolder;
+	width:15%;
+	height:8px;
+	text-align:center;
+	background-color: #E5E5E5;
+}
+
+
+.block1 {
+	display: table-cell;
+	border: solid 1px silver;
+	font-size:15px;
+	width:4%;
+	height:8px;
+	text-align:center;
+	/*
+	background: url("/img/edit_bottun.png") no-repeat center center;
+	*/
+}
+
+/* price */
+.block2 {
+	display: table-cell;
+	border: solid 1px silver;
+	font-size:15px;
+	width:15%;
+	height:8px;
+	padding-right:5px;
+	text-align:right;
+	background-color: white;
+}
+
+/* 履歴 */
+
+.table-rireki{
+  width: 100%;
+  border-collapse:separate;
+  border-spacing: 0;
+}
+
+.table-rireki th:first-child{
+  width: 5%;
+}
+
+/*
+.table-rireki th:last-child{
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #3c6690;
+}
+*/
+
+.table-rireki th{
+  text-align: center;
+  color:white;
+  background:linear-gradient(#a4db84,#b9f5b8);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  width: 15%;
+  padding: 5px 0;
+}
+
+.table-rireki td:nth-child(3),
+.table-rireki td:nth-child(6)
+{
+  text-align: left;
+  padding-left: 5px;
+}
+
+.table-rireki td:nth-child(5),
+.table-rireki td:nth-child(7)
+{
+  text-align: right;
+  padding-right:5px;
+}
+
+.table-rireki td{
+  text-align: center;
+  border-left: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  border-top:1px solid #a8b7c5;
+  box-shadow: 0px -3px 5px 1px #eee inset;
+  width: %;
+  padding: 1px;
+}
+
+/*
+.table-rireki td:last-child{
+  border-right: 1px solid #a8b7c5;
+}
+
+.table-rireki tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+.table-rireki tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+*/
+
+/*日ごと履歴　プルウダウン */
+.rireki_pull {
+	width:  20%;
+}
+
+
+/* 一覧情報スクロール */
+#scrollbar {
+  height: 500px;
+  width:  100%;
+  overflow-x: scroll;
+  white-space: nowrap;
+  overflow-y: scroll;
+  background-color: ;
+}
+
+.table-kiroku {
+	border: 0px solid gray;
+	background-color: white;
+}
+
+.table-kiroku th, .table-kiroku td {
+	border: px solid gray;
+	width: %;
+	text-align:center;
+}
+
+.table-joukyou {
+	border: 0px solid gray;
+	background-color: white;
+}
+
+.table-kongetu{
+	text-align:left;
+	padding-left:10px;
+	background-color: #66FF66;
+}
+
+.table-konnshuu{
+	text-align:left;
+	padding-left:10px;
+	background-color: #FFFF66;
+}
+
+.table-kyou{
+	text-align:left;
+	padding-left:10px;
+	background-color: #FF9872;
+}
+
+.table-joukyou {
+	border: 1px solid gray;
+	background-color: white;
+}
+
+.table-joukyou th, .table-joukyou td {
+	border: px solid gray;
+	width: 50%;
+	text-align:center;
+}
+
+
+
+
+
+
+
+/*マウスオーバー*/
+
+#menu div {
+  position: relative;
+}
+
+.arrow_box {
+	 display: none;
+	 width: 150px;
+	 height: 30px;
+	 text-align:center;
+	 position: absolute;
+	 padding: 0px;
+	 -webkit-border-radius: 8px;
+	 -moz-border-radius: 8px;
+	 border-radius: 8px;
+	 background: #333;
+	 color: #fff;
+}
+
+.arrow_box:after {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(51, 51, 51, 0);
+  border-bottom-color: #333;
+  border-width: 5px;
+  pointer-events: none;
+  content: " ";
+}
+
+span:hover + p.arrow_box {
+  display: block;
+}
+
+
+/* カレンダー */

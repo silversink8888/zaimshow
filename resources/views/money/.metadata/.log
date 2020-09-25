@@ -1,0 +1,41 @@
+!SESSION 2020-08-08 13:22:29.109 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=11.0.7
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ja_JP
+Framework arguments:  -product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product
+
+!ENTRY org.eclipse.mylyn.tasks.core 4 0 2020-08-08 13:25:33.515
+!MESSAGE Unexpected error while loading repository template extensions
+!SUBENTRY 1 org.eclipse.mylyn.tasks.core 4 0 2020-08-08 13:25:33.515
+!MESSAGE Could not load repository template extension contributed by 'org.eclipse.mylyn.bugzilla.ide' with connectorKind 'bugzilla'
+
+!ENTRY org.eclipse.jface 2 0 2020-08-08 13:40:35.329
+!MESSAGE キーバインドの競合が発生しました。 通常のアクセラレーター操作を妨げる可能性があります。
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-08-08 13:40:35.329
+!MESSAGE ALT+CTRL+S の競合が発生しました:
+Binding(ALT+CTRL+S,
+	ParameterizedCommand(Command(org.eclipse.wst.server.stop,停止,
+		サーバーを停止,
+		Category(org.eclipse.wst.server.ui,サーバー,サーバー,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3b6f1227,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.serverViewScope,,,system)
+Binding(ALT+CTRL+S,
+	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.SynchronizeCommand,リポジトリーと同期化,
+		,
+		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@38a77e1b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+S,
+	ParameterizedCommand(Command(org.eclipse.php.ui.edit.text.source.quickMenu,ソース・クイック・メニューを表示,
+		ソース・クイック・メニューを表示します,
+		Category(org.eclipse.php.ui.category.source,ソース,PHP ソース・アクション,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@584e4899,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.dltk.ui.context.views,,,system)
