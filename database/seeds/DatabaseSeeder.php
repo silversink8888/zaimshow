@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserSeeder::class);
         // BooksTableSeederを読み込むように指定
-       // 	$this->call(Tbl_MoneyTableSeeder::class);
-        	$this->call(Mst_categoryTableSeeder::class);
+        	$this->call(Tbl_MoneyTableSeeder::class);
+       // 	$this->call(Mst_categoryTableSeeder::class);
     }
 }

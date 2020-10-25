@@ -12,8 +12,10 @@
 	@if($target == 'store')
 		<form action="/money" method="post" >
 	@elseif($target == 'update')
-		<form action="/money/{{ $money_arr->id }}" method="post">
+		<form action="/money/{{$money_arr->id}}" method="post">
+		<!--
 		<input type="hidden" name="_method" value="PUT">
+		 -->
 	@endif
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<input type="hidden" name="name" value="{{ $money_arr->name }}">
@@ -68,23 +70,24 @@
 		       </tr>
 
 		       <tr>
-			       <td colspan="5"><input type="image" src="{{ asset('img/input.png')}}" alt="入力する"></td>
+			       <td colspan="5"><input type="image" src="{{ asset('img/input.png')}}" alt="入力する" id="edit"></td>
 		       </tr>
 		       </form>
 
 		       <tr>
 		        @if($target == 'update')
 				<td colspan="5">
-					<form action="/money/{{ $money_arr ->id }}" method="post" >
+					<form action="/money/delete/{{ $money_arr ->id }}" method="get" >
 
 						<input type="image" class="delete" src="{{ asset('img/delete.png')}}" alt="削除する">
+			<!--
 						<input type="hidden" name="_method" value="DELETE">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			 -->
 					</form>
 				</td>
 				@endif
 		       </tr>
-
 
 		       <tr>
 			       <td colspan="5"><input type="button" value="戻る" onClick="history.back()"></td>
@@ -100,7 +103,7 @@ $('.delete').on('click',function(e){
     var form = $(this).parents('form');
     swal({
         title: "確認",
-        text: "削除してよろしいですか？",
+        text: "削除しますか？",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
@@ -118,6 +121,37 @@ $('.delete').on('click',function(e){
 	    	});
 
         	window.location.href='/money/show';
+    });
+});
+</script>
+
+
+<script>
+$('#aaaaaaaaa').on('click',function(e){
+    e.preventDefault();
+    var form = $(this).parents('form');
+    swal({
+        title: "入力",
+        text: "入力しますか？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "入力する",
+        closeOnConfirm: false
+
+    }, function(isConfirm){
+        if (isConfirm) form.submit();
+
+	    	$(document).ready(function() {
+	    	    swal({
+	    	 		title: "入力しました",
+	    	//		text:"編集しました。";
+	    	  //    imageUrl: 'https://torina.top/media/images/smile.jpg',
+	    	  //    confirmButtonText: "編集しました",
+	    	    });
+		    	window.location.href='/money/show';
+	    	});
+
     });
 });
 </script>

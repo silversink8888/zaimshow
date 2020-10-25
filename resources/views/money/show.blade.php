@@ -1,4 +1,3 @@
-
 <!--/ ヘッダー -->
 @include('/money/header')
 <!-- ヘッダー /-->
@@ -27,46 +26,39 @@
 
 		<div class="container">
 
-			<div>
-				<table class="table-kiroku">
-					<tr>
-						<td><a href="/money/show">日ごと</a></td>
-						<td width="30%">週ごと</td>
-						<td>月ごと</td>
-					</tr>
+			<!-- 履歴のday or week or month ナビ /-->
+			@include('/money/show_navi')
 
-					<tr>
-						<td>
-							<!--
-							<a href="/money/show?month={{$month_arr[0]}}"><input type="image" src="{{ asset('img/dainari_1.png') }}" alt="前月"></a>
-							 -->
+			<table class="table-kiroku">
+				<tr>
+					<td>
+						<div id='last_month_data'></div><!-- Ajaxでここにデータ表示 -->
+						<input type='button' value='<' id='last_month'>
+					</td>
 
-							<div id='last_month_data'></div><!-- Ajaxでここにデータ表示 -->
-							<input type='button' value='<' id='last_month'>
-						</td>
-						<td>
-							<div id='this_month'>
-								<!--
-								<input type='text' id='ympicker' maxlength="7" name='ympicker' value="{{$month_arr[1]}}" placeholder='Enter yyyy-mm'>
-								 -->
-								<?php //YearMonthPulldown(); ?>
-							</div>
+					<td width="30%">
+						<div id='this_month_data'></div><!-- Ajaxでここに今月データ表示 -->
+     				</td>
 
-							<div id='this_month_data'></div><!-- Ajaxでここに今月データ表示 -->
-     					</td>
-						<td>
-							<div id='next_month_data'></div><!-- Ajaxでここにデータ表示 -->
-							<input type='button' value='>' id='next_month'>
-						</td>
-					</tr>
-				</table>
-			</div>
+					<td>
+						<div id='next_month_data'></div><!-- Ajaxでここにデータ表示 -->
+						<input type='button' value='>' id='next_month'>
+					</td>
+				</tr>
+			</table>
 
 		</div><!-- container -->
 	</section>
 
 	<!--/ 日ごとデーター -->
-	@include('/money/info_day')
+	@include('/money/info_daily')
+
+	<div id="scrollbar">
+		<table class='table-rireki' id='userTable'></table><!-- Ajaxでここにデータ表示 -->
+		<!--
+		<table class='table-rireki2' id='userTable2'></table><!-- Ajaxでここにデータ表示 -->
+
+	</div><!-- scrollbar -->
 	<!-- 日ごとデータ /-->
 
 </div><!-- wrapper -->

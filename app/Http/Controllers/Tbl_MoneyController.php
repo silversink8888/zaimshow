@@ -392,8 +392,9 @@ class Tbl_MoneyController extends Controller{
 	}
 
 	//履歴一覧
-	public function show($this_month){
-
+	public function show(){
+	//	public function show($this_month){
+//$this_month = '2020-10';
 		$month_arr = array();
 		$all = Request::all();
 
@@ -448,7 +449,7 @@ class Tbl_MoneyController extends Controller{
 		// 取得した値をビュー「money/edit」に渡す
 	//	return view('money/edit', compact('money_arr','category_arr'));
 		return view('money/edit', compact('money_arr','category_arr'))->with([
-		        'default_id' => $money_arr->id,
+		        'default_id'        => $money_arr->id,
 		        'default_item_name' => $money_arr->item_name,
 				'default_price'     => $money_arr->price,
 		        'default_buy_date'  => $money_arr->buy_date,
@@ -476,6 +477,7 @@ class Tbl_MoneyController extends Controller{
 		$money = Tbl_Money::findOrFail($id);
 		$money->delete();
 		return redirect("/money/show");
+	//	return redirect("/money");
 	}
 
 
@@ -542,6 +544,56 @@ class Tbl_MoneyController extends Controller{
 
 		return $money_arr;
 	}
+
+	//履歴　週ごと Ajax
+	public function AjaxGetDataWeekly($yearmonth){
+
+	//	$yearmonth='2020-10';
+		$yearmonth2  = mb_substr($yearmonth,0,7);//年月の切り出し 2020-091
+	//	$day_pull    = mb_substr($yearmonth,7,1);//日付プルダウンの切り出し
+
+		$money_arr = array();
+		$money_arr = DB::table('tbl_money')
+		->where('name', $this->user->name)
+		->where('buy_date','like', $yearmonth2 .'%')
+	//	->orderBy('buy_date','desc')
+	//	->orderBy($column,$orderby)
+		->orderBy('id','asc')
+		->get();
+
+		//該当データが無しの時
+		if(count($money_arr) == 0){
+			$stdObj = new \stdClass();
+			$money_arr[] = $stdObj;
+		}
+
+		//カテゴリマスタ取得
+		$category_arr = $this->MstCategory_arr();
+		//「カテゴリ」　数字→文字変換
+		$money_arr = $this->CategoryIntToString($money_arr,$category_arr);
+
+		//「yyyy-mm-dd」の形に成形
+		$money_arr = $this->AdjustDateToyyyymmdd($money_arr);
+		//日付から曜日を取得
+		$money_arr = $this->GetDayOfTheWeeStringFromDate($money_arr);
+	//	print_r($money_arr);
+		//金額3桁区切り
+		$money_arr = $this->AdjustPrice($money_arr);
+
+	//	$userData['data'] = $money_arr;
+		$money_arr = json_encode($money_arr);
+
+	//	return view('money/show_weekly');
+	//	return view('money/show_weekly', compact('money_arr'));
+		return $money_arr;
+
+		}
+
+		public function getDataWeekly(){
+
+			return view('money/show_weekly');
+		}
+
 
 
 }

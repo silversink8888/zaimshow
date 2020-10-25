@@ -13,28 +13,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('book', 'MoneyController@index');
-//Route::get('book/{id}', 'BookController@show');
-//Route::get('money/{id}' , 'MoneyController@show');
-//Route::resource('book', 'BookController');
+//一覧画面
+Route::get('money','Tbl_MoneyController@index');
+//入力画面
+Route::get('money/create','Tbl_MoneyController@create');
+//入力処理
+Route::post('money','Tbl_MoneyController@store');
 
-//Route::get('money','Tbl_MoneyController@index');
-//Route::get('money/create','Tbl_MoneyController@create');
-//Route::post('money/store','Tbl_MoneyController@store');
+//編集画面
+Route::get('money/{id}/edit','Tbl_MoneyController@edit');
+//編集処理
+Route::POST('money/{id}','Tbl_MoneyController@update');
 
-Route::resource('money','Tbl_MoneyController');
+//削除処理
+Route::get('money/delete/{id}','Tbl_MoneyController@destroy');
+
+//履歴　日ごと
+//Route::get('/money/show', 'Tbl_MoneyController@index2'); // localhost:8000/
+Route::get('money/show/{selectedmonth}','Tbl_MoneyController@getData');
+
+//履歴　週ごと Ajax
+Route::get('money/show_weekly_for_ajax/{selectedmonth}','Tbl_MoneyController@AjaxGetDataWeekly');
+// Route::get('money/show_weekly/{selectedmonth}','Tbl_MoneyController@getData');
+
+//履歴　週ごと
+Route::get('money/show_weekly/','Tbl_MoneyController@getDataWeekly');
+
+//履歴画面
+Route::get('money/show','Tbl_MoneyController@show');
+
+//Route::resource('money','Tbl_MoneyController');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+//ログインチェック
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('aaa','Tbl_MoneyController@graph');
-
-//Route::get('aaa', 'Tbl_MoneyController@getAddressByPostalCode');
-//Route::get('/money/show', 'Tbl_MoneyController@index2'); // localhost:8000/
-Route::get('/money/show/{selectedmonth}','Tbl_MoneyController@getData');
 
