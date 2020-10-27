@@ -4,7 +4,7 @@
 			<td><a href="/money">ZAIMSHOW</a></td>
 			<td><a href="/money/create">家計簿を入力</a></td>
 			<td><a href="/money/show">履歴</a></td>
-			<td><a href="">分析</a></td>
+			<td>分析</td>
 		</tr>
 	</table>
 </div>

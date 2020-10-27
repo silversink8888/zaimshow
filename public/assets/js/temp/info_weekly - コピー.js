@@ -10,11 +10,13 @@ $(document).ready(function(){
 	var select_day_style_pulldown=1;
 
 	//先月
-	$('#last_month').click(function(){
-		var select_last_month = $('#last_ympicker').val().trim();
+	$('#last_month_for_week').click(function(){
+		alert('last_month_for_week');
+		var select_last_month = $('#last_ympicker_for_week').val().trim();
+		alert(select_last_month);
 		if(select_last_month){
 		//	fetchRecords(select_last_month);
-		//	fetchRecords(select_last_month,select_day_style_pulldown);
+			fetchRecordsweekly(select_last_month,select_day_style_pulldown);
 		}
 	});
 
@@ -23,7 +25,7 @@ $(document).ready(function(){
 		var selectedmonth = $('#next_ympicker').val().trim();
 		if(selectedmonth){
 		//	fetchRecords(selectedmonth);
-		//	fetchRecords(selectedmonth,select_day_style_pulldown);
+			fetchRecordsweekly(selectedmonth,select_day_style_pulldown);
 		}
 	});
 
@@ -40,6 +42,7 @@ $(document).ready(function(){
 	});
 
 	//日付用プルダウン
+	/*
 	$('#day_pulldown_data').change(function(){
 		select_day_style_pulldown = $('#day_style_pulldown').val().trim();
 		selectedmonth = $('#ympicker').val().trim();
@@ -49,11 +52,13 @@ $(document).ready(function(){
 		//	fetchRecordsweeklyweekly(selectedmonth,select_day_style_pulldown);
 		}
 	});
+	*/
+
 
 	//履歴ページ初回処理
 	if(selectedmonth !=''){
-//		var selectedmonth = $('#ympicker').val().trim();
-	//	fetchRecordsweekly(selectedmonth,select_day_style_pulldown);
+	//	var selectedmonth = $('#ympicker_for_week').val().trim();
+		fetchRecordsweekly(selectedmonth,select_day_style_pulldown);
 	}
 
 
@@ -136,12 +141,13 @@ function changeToDateFomYyyymmdd(short_buy_date){
 
 
 function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
-	alert('fetchRecordsweekly');
+//	alert('fetchRecordsweekly');
+	alert(selectedmonth);
 	$.ajax({
 		  type: 'GET',
 		  cache: false,
 //		  url: '/money/show/'+selectedmonth + select_day_style_pulldown,
-		  url: '/money/show_weekly/'+selectedmonth,
+		  url: '/money/show_weekly_for_ajax/'+selectedmonth,
 		  dataType: 'json'
 		})
 
@@ -149,12 +155,12 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 		//共通処理
 		.always((response) => {
 
-			$('#day_pulldown_data').empty(); // Empty
-			$('#userTable').empty(); // Empty
+//			$('#day_pulldown_data').empty(); // Empty
+//			$('#userTable').empty(); // Empty
 			$('#userTable2').empty(); // Empty
 			$('#last_month_data').empty(); // Empty
 			$('#next_month_data').empty(); // Empty
-			$('#this_month_data').empty(); // Empty
+			$('#this_month_data_for_week').empty(); // Empty
 
      		var len = 0;
      		len = response.length;
@@ -213,7 +219,7 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 
 		//週ごとの開始日と終了日の配列の初期化
 		var weekArr = new Array(6);
-		for(let y = 0; y < 6; y++) {
+		for(let y=0; y<=6; y++) {
 		  weekArr[y] = new Array(2).fill(0);
 		}
 
@@ -308,11 +314,11 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 
 
      			//週ごとテンプレートの開始日　年月日
- 				var graph_start_buy_date = weekArr[1]['startDayOfWeek'];
+ 				var graph_start_buy_date = weekArr[0]['startDayOfWeek'];
  				graph_start_buy_date = changeToDateFomYyyymmdd(graph_start_buy_date);
 
      			//週ごとテンプレートの終了日　年月日
- 				var graph_end_buy_date = weekArr[1]['endDayOfWeek'];
+ 				var graph_end_buy_date = weekArr[0]['endDayOfWeek'];
  				graph_end_buy_date = changeToDateFomYyyymmdd(graph_end_buy_date);
 
 
@@ -366,12 +372,8 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
      				if(m<10){m = '0'+m;}//月を2桁
      				var pullym = y+"-"+m;
 
-
-
      				if(selectedmonth == pullym){
-     					 selected = "selected";
-     				}else if(thisYearMonth == pullym){
-     					 selected = "selected";
+     					selected = "selected";
      				}
 
      				yearMonthPulldown += "<option value='" + y + "-" + m + "'"+selected+">" + y + "年" + m + "月</option>" ;
@@ -381,13 +383,12 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 
      		//今月
 //     		var this_month = "<input type='hidden' id='next_ympicker' name='next_ympicker' value='" + selectedmonth + "'>";
-     		var this_month_html = "<select name='ympicker' id='ympicker'>" + yearMonthPulldown + "</select>" ;
-
-     		$("#this_month_data").append(this_month_html);
-//     		$("#ympicker").append(this_month);
+     		var this_month_html = "<select name='ympicker_for_week' id='ympicker_for_week'>" + yearMonthPulldown + "</select>" ;
+     		$("#this_month_data_for_week").append(this_month_html);
+//     		$("#ympicker_for_week").append(this_month);
 
      		//先月
-     		var last_month_html = "<input type='hidden' id='last_ympicker' name='last_ympicker' value='" + last_month + "'>";
+     		var last_month_html = "<input type='hidden' id='last_ympicker_for_week' name='last_ympicker_for_week' value='" + last_month + "'>";
      		$("#last_month_data").append(last_month_html);
 
      		//来月
@@ -410,7 +411,7 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 	     	   var tr_str =
 	     		   "<td colspan='7'>No record found.</td>"
 	     		   ;
-	     		   $("#userTable22").append(tr_str);
+	     		   $("#userTable2").append(tr_str);
 
 		  })
 
