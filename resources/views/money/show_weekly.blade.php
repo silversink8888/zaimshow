@@ -58,38 +58,33 @@
 
 		<div>
 			<table class='table-rireki2'>
+
 				<tr id='userTable_for_week'></tr>
 
 				<tr><!-- 個別データ -->
 					<td>
-						<table class='table-rireki2' id='userTable_for_week_1'></table>
+						<table id='userTable_for_week_1'></table>
 					</td>
 
 					<td>
-						<table class='table-rireki2' id='userTable_for_week_2'></table>
+						<table id='userTable_for_week_2'></table>
 					</td>
 
 					<td>
-						<table class='table-rireki2' id='userTable_for_week_3'></table>
+						<table id='userTable_for_week_3'></table>
 					</td>
 
 					<td>
-						<table class='table-rireki2' id='userTable_for_week_4'></table>
+						<table id='userTable_for_week_4'></table>
 					</td>
 
 					<td>
-<!--
-						<table class='table-rireki2' id='userTable_for_week_5'></table>
- -->
- 					<div class="">
 						<table id='userTable_for_week_5'></table>
-
- 					</div>
-
 					</td>
 				</tr>
 
-				<tr><!-- 週ごとデータ -->
+
+				<tr><!-- 週ごと合計データ -->
 					<td>
 						<table>
 							<tr>
@@ -135,15 +130,11 @@
 						</table>
 					</td>
 
-				</tr>
+				</tr><!-- 週ごと合計データ -->
 
-			</table>
-		</div>
-
+			</table><!-- Ajaxでここにデータ表示 -->
 
 
-
-		</table><!-- Ajaxでここにデータ表示 -->
 
 	</div><!-- scrollbar -->
 	<!-- 日ごとデータ /-->

@@ -346,6 +346,17 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
      	 	//	alert(date_buy_date);
 
 
+     		//「￥」＋「コンマ付き金額」を数字に戻す
+ 			//	var price_number = Number(price.replace('￥',''));
+ 				var price_number = price.replace('￥','');
+
+ 				if(price_number.length >3){
+ 		 			price_number = parseInt(price_number.split(',').join(''));
+ 	 			//	alert(price_number.length);
+ 				}
+
+
+
      			/**********************************************/
 				//	1週間目
      			/**********************************************/
@@ -361,8 +372,10 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
  				graph_end_buy_date = changeToDateFomYyyymmdd(graph_end_buy_date);
  				//alert(date_buy_date);
 
- 				var price_number = price.replace('￥','');
-// 				 price_number = Number(price.replace(',',''));
+ 				// price_number = price_number.replace('.','');
+ 	 			//	var num = parseInt('100,000'.split(',').join(''));
+ 	 			//	var price_number = parseInt(price_number.split(',').join(''));
+// 				alert(price_number);
 
      			// 1週目の開始日～終了日
         		if(graph_start_buy_date <= date_buy_date && date_buy_date <= graph_end_buy_date){
@@ -556,8 +569,13 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
      		/**************************************/
      		//金額合計表示
      		/**************************************/
+     		var tr_str_sum;
+
 			//第1週目
-     		price_week_1_sum = '￥ ' + price_week_1_sum;
+     	//	price_week_1_sum = Number.isNaN(price_week_1_sum);
+     	//	alert((isNaN(price_week_1_sum)));
+
+     		price_week_1_sum = '￥ ' + Number(price_week_1_sum);
  			$("#userTable_for_week_1_sum").append(price_week_1_sum);
 
 			//第2週目
@@ -635,9 +653,14 @@ function fetchRecordsweekly(selectedmonth,select_day_style_pulldown){
 		   // データ無し
 		  .fail((response) => {
 	     	   var tr_str =
-	     		   "<td colspan='7'>No record found.</td>"
+//	     		   "<td colspan='7'>No record found.</td>"
+	     		   "No record found."
 	     		   ;
-	     		   $("#userTable_for_week_1").append(tr_str);
+     		   $("#userTable_for_week_1").append(tr_str);
+//     		   $("#userTable_for_week_2").append(tr_str);
+ //    		   $("#userTable_for_week_3").append(tr_str);
+   //  		   $("#userTable_for_week_4").append(tr_str);
+     //		   $("#userTable_for_week_5").append(tr_str);
 
 		  })
 
