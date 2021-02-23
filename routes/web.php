@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 //一覧画面
 Route::get('money','Tbl_MoneyController@index');
+
 //入力画面
 Route::get('money/create','Tbl_MoneyController@create');
+
 //入力処理
 Route::post('money','Tbl_MoneyController@store');
+//Route::post('money','Tbl_MoneyController@upload');
 
 //編集画面
 Route::get('money/{id}/edit','Tbl_MoneyController@edit');
@@ -47,6 +50,13 @@ Route::get('money/show','Tbl_MoneyController@show');
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//Route::get('/index','PostController@index')->name('index');
+
+//Route::post('/store','PostController@store')->name('store');
+
+
 
 //ログインチェック
 Auth::routes();

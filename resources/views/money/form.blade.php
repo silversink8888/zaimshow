@@ -1,4 +1,3 @@
-
 <div class="col-md-6">
 @if($target == 'store')
     <h2></h2>
@@ -10,13 +9,14 @@
 <div class="col-md-8 col-md-offset-1">
 	@include('money/message')
 	@if($target == 'store')
-		<form action="/money" method="post" >
+		<form action="/money" method="post" enctype="multipart/form-data">
 	@elseif($target == 'update')
-		<form action="/money/{{$money_arr->id}}" method="post">
+		<form action="/money/{{$money_arr->id}}" method="post" enctype="multipart/form-data">
 		<!--
 		<input type="hidden" name="_method" value="PUT">
 		 -->
 	@endif
+		{{ csrf_field() }}
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<input type="hidden" name="name" value="{{ $money_arr->name }}">
 
@@ -69,34 +69,138 @@
 			       <td colspan="3" ><input type="text"  maxlength="20" class="form-control" name="store" value="{{ old('store', isset($default_store) ? $default_store : '') }}"></td>
 		       </tr>
 
-		       <tr>
-			       <td colspan="5"><input type="image" src="{{ asset('img/input.png')}}" alt="入力する" id="edit"></td>
-		       </tr>
-		       </form>
+<!-- 20210205 Added By Suzuki @画像アップロード機能 Start -->
+				<tr>
+					<td>写真</td>
+					<!--
+					<td colspan="" ></td>
+					-->
 
-		       <tr>
-		        @if($target == 'update')
+						@if($target == 'store')
+						
+							<td>						
+								<label>
+									<input type="file" name="file" class="js-upload-file">ファイルを選択
+								</label>
+								<div class="js-upload-filename">ファイル未選択</div>
+								<div class="fileclear js-upload-fileclear">選択ファイルをクリア</div>
+							</td>														
+						@else
+
+							<!-- 画像あり -->
+							@if($attachments_arr['path'] !='no')
+								<td>								
+									<label>
+										<input type="file" name="file" class="js-upload-file">ファイルを選択
+									</label>
+
+									<div class="js-upload-filename"></div>
+									<div class="fileclear js-upload-fileclear">選択ファイルをクリア</div>
+								</td>
+
+								<td>
+									<img src="{{ asset('storage/'.$attachments_arr['path']) }}" width="200px" height="140px">
+								</td>
+							
+							@else <!-- 画像なし -->
+						
+							<td>
+								<label>
+									<input type="file" name="file" class="js-upload-file">ファイルを選択
+								</label>
+								<div class="js-upload-filename">ファイル未選択</div>
+								<div class="fileclear js-upload-fileclear">選択ファイルをクリア</div>							
+							</td>
+
+							@endif
+
+						@endif
+					
+				</tr>
+<!-- 20210205 Added By Suzuki @画像アップロード機能 End -->
+
+				<tr>
+					<td colspan="5"><input type="image" src="{{ asset('img/input.png')}}" alt="入力する" id="edit"></td>
+				</tr>
+				</form>
+
+				<tr>
+				@if($target == 'update')
 				<td colspan="5">
 					<form action="/money/delete/{{ $money_arr ->id }}" method="get" >
 
-						<input type="image" class="delete" src="{{ asset('img/delete.png')}}" alt="削除する">
+						<input type="image" class="delete" id="delete" src="{{ asset('img/delete.png')}}" alt="削除する">
 			<!--
 						<input type="hidden" name="_method" value="DELETE">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-			 -->
+			-->
 					</form>
 				</td>
 				@endif
-		       </tr>
+			</tr>
 
-		       <tr>
-			       <td colspan="5"><input type="button" value="戻る" onClick="history.back()"></td>
-		       </tr>
+			<tr>
+				<td colspan="5"><input type="button" value="戻る" onClick="history.back()"></td>
+			</tr>
 	</table>
 
 </div>
 
 
+<script>
+$('#delete').on('click', function(e) {
+    e.preventDefault();
+    var form = $('form');
+	
+	swal.fire({
+        title: "本当に削除しますか?"
+        ,icon: "warning"
+        ,showCancelButton: true
+        ,confirmButtonColor: "#DD6B55"
+        ,confirmButtonText: "削除します!"
+		,position : 'center'
+		,closeOnConfirm: false
+		,allowEscapeKey: true //Escボタン
+		,allowOutsideClick : true //枠外クリック
+		,showCloseButton : true   //閉じるボタン
+
+	}).then(function(result) { //←この行の記述を修正した結果改善された
+
+		if (result.value) {
+
+			form.submit();
+
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: 'Successfully Deleted!',
+				showConfirmButton: false,
+				timer: 2500
+			})
+		}
+	});
+});
+</script>
+
+<script>
+	document.getElementById("edit").onclick = function(e){
+
+		Swal.fire({
+			position: 'center',
+			icon: 'success',
+			title: 'Successfully Inputed!',
+			showConfirmButton: false,
+			timer: 2000
+			
+		})
+
+	};
+</script>
+
+
+
+<!--
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
 $('.delete').on('click',function(e){
     e.preventDefault();
@@ -109,21 +213,21 @@ $('.delete').on('click',function(e){
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "削除する",
         closeOnConfirm: false
-    }, function(isConfirm){
+    }, then function(isConfirm){
         if (isConfirm) form.submit();
-
 	    	$(document).ready(function() {
 	    	    swal({
 	    	      title: "削除完了しました。",
-	    	  //    imageUrl: 'https://torina.top/media/images/smile.jpg',
-	    	  //    confirmButtonText: "すごーい！",
+	    	      imageUrl: 'https://torina.top/media/images/smile.jpg',
+	    	      confirmButtonText: "すごーい！",
 	    	    });
 	    	});
-
         	window.location.href='/money/show';
     });
 });
 </script>
+-->
+
 
 
 <script>
@@ -138,10 +242,8 @@ $('#aaaaaaaaa').on('click',function(e){
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "入力する",
         closeOnConfirm: false
-
     }, function(isConfirm){
         if (isConfirm) form.submit();
-
 	    	$(document).ready(function() {
 	    	    swal({
 	    	 		title: "入力しました",
@@ -151,7 +253,6 @@ $('#aaaaaaaaa').on('click',function(e){
 	    	    });
 		    	window.location.href='/money/show';
 	    	});
-
     });
 });
 </script>

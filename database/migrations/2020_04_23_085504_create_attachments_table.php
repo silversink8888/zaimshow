@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMstCategoryTable extends Migration
+class CreateAttachmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateMstCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('mst_category', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
+            $table->integer('parent_id');
+            $table->string('model')->comment('モデル名');
+            $table->string('path')->comment('ファイルパス');
+            $table->string('key')->comment('キー');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateMstCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mst_category');
+        Schema::dropIfExists('attachments');
     }
 }

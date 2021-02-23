@@ -12,6 +12,9 @@ use Carbon\Carbon;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use App\Attachment;
+//use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Str;
 
 class Tbl_MoneyController extends Controller{
 	public $user;
@@ -376,8 +379,28 @@ class Tbl_MoneyController extends Controller{
 								    ]);
 	}
 
+	/***********************************/
+	//買い物番号(buy_no)を取得 (attachmentでも使用)
+	/***********************************/
+	private function GetBuynoFromMoneyData($buy_date,$name){
+
+		$buy_no = '';
+
+		$buy_no .= $name;
+		$buy_no .= str_replace('-','',$buy_date);
+
+		list($sec, $msec) = explode(".", microtime(true));
+	//	$buy_no = date('YmdHis', $sec) . '' . substr($msec, 0, 4);
+		$buy_no .= date('His', $sec) . '' . substr($msec, 0, 4);
+
+		return $buy_no;
+	}
+
 	public function store(Tbl_MoneyRequest $request){
-	    $money_arr = new Tbl_Money();
+		$money_arr = new Tbl_Money();
+
+		$buy_no = '';
+		$buy_no = $this->GetBuynoFromMoneyData($request->buy_date,$request->name);
 
 	    $money_arr->buy_date = $request->buy_date;
 	    $money_arr->name = $request->name;
@@ -386,7 +409,15 @@ class Tbl_MoneyController extends Controller{
 	    $money_arr->price = $request->price;
 	    $money_arr->store = $request->store;
 	    $money_arr->memo = $request->memo;
-	    $money_arr->save();
+	    $money_arr->buy_no = $buy_no;
+		$money_arr->save();
+		
+        // 画像保存
+        if($money_arr && $request->hasFile('file')) {
+			// tbl_attachmentControllerのFileUploadメソッドを呼び出す
+			$tbl_attachment = app()->make('App\Http\Controllers\Tbl_AttachmentController');
+			$tbl_attachment->FileUpload($request,$money_arr);
+		}
 
 	    return redirect("/money");
 	}
@@ -435,10 +466,40 @@ class Tbl_MoneyController extends Controller{
 	//  return view('money/show', ['money' => Money::findOrFail($id)]);
 	}
 
+	private function getAttachments($buy_no){
+
+		$attachments_arr = array();
+
+		$attachments_arr = DB::table('attachments')
+							->where('buy_no', $buy_no)
+							->get();
+
+		return $attachments_arr;
+	}
+
 	public function edit($id){
 		// DBよりURIパラメータと同じIDを持つテーブルの情報を取得
 		$money_arr = Tbl_Money::findOrFail($id);
-	//	print_r($money_arr);
+		//print_r($money_arr['buy_no']);
+		/***********************************/
+		//画像データ取得
+		/***********************************/
+		$attachments_arr = '';
+	//	$attachments_arr = Attachment::where('buy_no', $money_arr['buy_no'])->firstOrFail();
+		$attachments_arr = $this->getAttachments($money_arr['buy_no']);
+
+		$attachments_arr = json_decode($attachments_arr, true);
+	//	print_r($attachments_arr[0]['path']);
+	//	print_r('<br>');
+
+		if($attachments_arr){
+			$attachments_arr['path'] = $attachments_arr[0]['path'];
+		//	print_r($attachments_arr['path'] );
+		}else{
+			$attachments_arr['path'] = 'no';
+		}
+
+
 		/***********************************/
 		//カテゴリマスタ取得
 		/***********************************/
@@ -448,19 +509,19 @@ class Tbl_MoneyController extends Controller{
 
 		// 取得した値をビュー「money/edit」に渡す
 	//	return view('money/edit', compact('money_arr','category_arr'));
-		return view('money/edit', compact('money_arr','category_arr'))->with([
+		return view('money/edit', compact('money_arr','category_arr','attachments_arr'))->with([
 		        'default_id'        => $money_arr->id,
 		        'default_item_name' => $money_arr->item_name,
 				'default_price'     => $money_arr->price,
 		        'default_buy_date'  => $money_arr->buy_date,
 		        'default_memo'      => $money_arr->memo,
 				'default_store'     => $money_arr->store,
+		//		'default_path'     => $attachments_arr->path,
 		]);
 
 	}
 
-	public function update(Tbl_MoneyRequest $request, $id)
-	{
+	public function update(Tbl_MoneyRequest $request, $id){
 		$money = Tbl_Money::findOrFail($id);
 		$money->item_name   = $request->item_name;
 		$money->dai_category  = $request->dai_category;
@@ -468,7 +529,15 @@ class Tbl_MoneyController extends Controller{
 		$money->price  = $request->price;
 		$money->memo   = $request->memo;
 		$money->store  = $request->store;
+//		$money->buy_no  = $request->buy_no;
 		$money->save();
+
+		// 画像保存
+		if($money && $request->hasFile('file')) {
+			// tbl_attachmentControllerのFileUploadメソッドを呼び出す
+			$tbl_attachment = app()->make('App\Http\Controllers\Tbl_AttachmentController');
+			$tbl_attachment->FileUpload($request,$money);
+		}
 
 		return redirect("/money/show");
 	}

@@ -21,7 +21,7 @@
 	color:black:
 	margin:10px;
 }
-/*@ƒpƒ“‚­‚¸ƒŠƒXƒg*/
+/*ï¿½@ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½g*/
 .pankuzu_list {
 	border-radius: px;
 	border: 1;
@@ -66,7 +66,7 @@
 
 }
 
-/* “ü—ÍƒtƒH[ƒ€ */
+/* ï¿½ï¿½ï¿½Íƒtï¿½Hï¿½[ï¿½ï¿½ */
 /*  */
 .table3 {
 	border: 0px solid gray;
@@ -87,7 +87,7 @@
 
 }
 
-/* ˆê——î•ñ */
+/* ï¿½ê——ï¿½ï¿½ï¿½ */
 /*  */
 .table-info {
 	border: 1px solid gray;
@@ -156,7 +156,7 @@
 	background-color: white;
 }
 
-/* —š—ğ @“ú‚²‚Æ */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
 .table-rireki{
   width: 100%;
@@ -226,7 +226,7 @@
 */
 
 
-/* —š—ğ @T‚²‚Æ */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½@ï¿½Tï¿½ï¿½ï¿½ï¿½ */
 
 .table-rireki2{
   width: 100%;
@@ -261,7 +261,7 @@
 	background-color:#E5E5E5;
 }
 
-/*  T‚²‚Æ‚Ì—š—ğ‚ÅA‚»‚ÌT‚ÉŠY“–‚·‚éT */
+/*  ï¿½Tï¿½ï¿½ï¿½Æ‚Ì—ï¿½ï¿½ï¿½ï¿½ÅAï¿½ï¿½ï¿½ÌTï¿½ÉŠYï¿½ï¿½ï¿½ï¿½ï¿½ï¿½T */
 .this_week_style {
 	border-style: groove;
 	border-width: 2px;
@@ -273,7 +273,7 @@
 	background:#EEE8AA;
 }
 
-/*  T‚²‚Æ‚Ì—š—ğ‚ÅA‚»‚ÌT‚ÉŠY“–‚µ‚È‚¢T */
+/*  ï¿½Tï¿½ï¿½ï¿½Æ‚Ì—ï¿½ï¿½ï¿½ï¿½ÅAï¿½ï¿½ï¿½ÌTï¿½ÉŠYï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½T */
 .this_week_style_not {
 	border-style: solid;
 	border-width: 2px;
@@ -285,13 +285,13 @@
 	background:#;
 }
 
-/*“ú‚²‚Æ—š—ğ@ƒvƒ‹ƒEƒ_ƒEƒ“ */
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Æ—ï¿½ï¿½ï¿½ï¿½@ï¿½vï¿½ï¿½ï¿½Eï¿½_ï¿½Eï¿½ï¿½ */
 .rireki_pull {
 	width:  20%;
 }
 
 
-/* ˆê——î•ñƒXƒNƒ[ƒ‹ */
+/* ï¿½ê——ï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ */
 #scrollbar {
   height: 500px;
   width:  100%;
@@ -352,7 +352,7 @@
 
 
 
-/*ƒ}ƒEƒXƒI[ƒo[*/
+/*ï¿½}ï¿½Eï¿½Xï¿½Iï¿½[ï¿½oï¿½[*/
 
 #menu div {
   position: relative;
@@ -392,4 +392,34 @@ span:hover + p.arrow_box {
 }
 
 
-/* ƒJƒŒƒ“ƒ_[ */
+/* 20210205 Edited By Suzuki @ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ Start */ 
+
+input[type="file"] {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+}
+
+/*
+label[for="mail"] {
+*/
+label {
+	width:250px;
+	padding: 10px 25px;
+	margin: 0 0 10px;
+	background: #66FFCC;
+	color: #fff;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.fileclear {
+	display: none;
+	margin: 10px 0 0;
+	text-decoration: underline;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+/* 20210205 Edited By Suzuki @ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ end */ 
+

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblMoneyTable extends Migration
+class AddBuyNoToTblMoneyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTblMoneyTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_money', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('tbl_money', function (Blueprint $table) {
+            //
+            $table->string('buy_no',32);  //カラム追加
         });
     }
 
@@ -26,6 +26,9 @@ class CreateTblMoneyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_money');
+        Schema::table('tbl_money', function (Blueprint $table) {
+            //
+            $table->dropColumn('buy_no');  //カラムの削除
+        });
     }
 }

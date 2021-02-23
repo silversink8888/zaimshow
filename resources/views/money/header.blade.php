@@ -34,8 +34,7 @@
 
 <!--
 <script type="text/javascript" src="/assets/js/info_day.js"></script>
- -->
-
+-->
 
 
 <script>
@@ -63,9 +62,45 @@ $( function() {
 <!--/ sweetalert -->
 <script src="https://torina.top/media/sweetalert/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://torina.top/media/sweetalert/sweetalert.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
 <!-- sweetalert /-->
 
 
+<!-- 20210216 Added By Suzuki @画像アップロード機能 Start -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(function() {
+  $('.js-upload-file').on('change', function () { //ファイルが選択されたら
+    let file = $(this).prop('files')[0]; //ファイルの情報を代入(file.name=ファイル名/file.size=ファイルサイズ/file.type=ファイルタイプ)
+    $('.js-upload-filename').text(file.name); //ファイル名を出力
+    $('.js-upload-fileclear').show(); //クリアボタンを表示
+  });
+
+  $('.js-upload-fileclear').click(function() { //クリアボタンがクリックされたら
+    $('.js-upload-file').val(''); //inputをリセット
+    $('.js-upload-filename').text('ファイルが未選択です'); //ファイル名をリセット
+    $(this).hide(); //クリアボタンを非表示
+  });
+});
+</script>
+<!-- 20210216 Added By Suzuki @画像アップロード機能 end -->
+
+<!-- 20210217 Added By Suzuki @削除ダイアログ修正 Start -->
+<!--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.4/sweetalert2.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.4/sweetalert2.js"></script>
+
+-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/assets/css/sweetalert2.css">
+<script charset="UTF-8" src="/assets/js/sweetalert2.js"></script>
+
+
+<!-- 20210217 Added By Suzuki @削除ダイアログ修正 End -->
 
 
 </head>
