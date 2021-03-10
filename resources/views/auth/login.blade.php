@@ -38,7 +38,10 @@
 
 						<!-- 新しくユーザーIDの入力項目を追加する -->
 						<div class="form-group row">
+						<!--
 						    <label for="name" class="col-md-4 col-form-label text-md-right">ユーザID&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						-->
+						    <div for="name" class="col-md-4 col-form-label text-md-right">ユーザID&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 						    <div class="col-md-6">
 						        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -53,7 +56,10 @@
 
 
                         <div class="form-group row">
+						<!--
                             <label for="password" class="col-md-4 col-form-label text-md-right">パスワード</label>
+						-->
+                            <div for="password" class="col-md-4 col-form-label text-md-right">パスワード</div>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">

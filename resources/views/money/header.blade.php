@@ -52,11 +52,19 @@ $( function() {
 <!-- jQuery UI Datepicker /-->
 
 <!--/ Datepicker custom-->
+<!--
 <link rel="stylesheet" href="/assets/css/jquery-ui-yscustom.css">
 <script charset="UTF-8" src="/assets/js/jquery-3.3.1.min.js"></script>
+-->
 <script charset="UTF-8" src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
 <script charset="UTF-8" src="/assets/js/jquery-ui-yscustom.min.js"></script>
 <script charset="UTF-8" src="/assets/js/index.js"></script>
+
+<!--/ 20210310 Added by suzuki @Datepicker -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <!-- Datepicker custom/-->
 
 <!--/ sweetalert -->

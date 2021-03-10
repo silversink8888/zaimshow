@@ -59,7 +59,7 @@
 				       value="{{ old('buy_date', isset($default_buy_date) ? $default_buy_date : '') }}"  id="datepicker" ></td>
 					@else
 				       <input type="text" maxlength="10" class="form-control" name="buy_date"
-				       value="{{ old('buy_date', isset($default_buy_date) ? $default_buy_date : '') }}"   ></td>
+				       value="{{ old('buy_date', isset($default_buy_date) ? $default_buy_date : '') }}"  id="datepicker" ></td>
 					@endif
 
 		       </tr>

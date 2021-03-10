@@ -52,14 +52,8 @@ Route::get('/', function () {
 });
 
 
-//Route::get('/index','PostController@index')->name('index');
-
-//Route::post('/store','PostController@store')->name('store');
-
-
 
 //ログインチェック
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-
 
