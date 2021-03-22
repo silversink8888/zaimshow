@@ -86,8 +86,13 @@
 					</tr>
 					<tr>
 						<td>
-							<!--/ 円グラフ-->
+							<!-- /* 2021/03/19 Edited by Suzuki @grah機能*/ -->
+							<!-- 
 							@include('/money/chartjs')
+							 -->
+
+							<!--/ 円グラフ-->
+							@include('/money/vue-chart')
 							<!-- 円グラフ/-->
 						</td>
 					</tr>

@@ -45,6 +45,14 @@ Route::get('money/show_weekly/','Tbl_MoneyController@getDataWeekly');
 //履歴画面
 Route::get('money/show','Tbl_MoneyController@show');
 
+/* 2021/03/19 Added by Suzuki @grah機能*/
+//Route::get('money/summary_month_for_ajax','Tbl_MoneyController@getData');
+Route::get('money/summary/{selectedmonth}','Tbl_GraphController@graph_getData');
+
+//分析画面
+Route::get('money/summary','Tbl_GraphController@summary');
+
+
 //Route::resource('money','Tbl_MoneyController');
 
 Route::get('/', function () {
