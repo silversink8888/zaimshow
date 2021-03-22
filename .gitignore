@@ -3,12 +3,12 @@
 /public/storage
 /public/*.jpg
 /storage/*.key
-/vendor
+
 /temp
 /resources/views/@backup
 /resources/views/money/@money
 /resources/views/money/temp
-.env
+
 .env.backup
 .phpunit.result.cache
 Homestead.json
