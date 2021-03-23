@@ -4,6 +4,7 @@
 /public/*.jpg
 /storage/*.key
 /vendor
+
 /temp
 /resources/views/@backup
 /resources/views/money/@money
