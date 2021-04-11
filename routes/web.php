@@ -45,6 +45,32 @@ Route::get('money/show_weekly/','Tbl_MoneyController@getDataWeekly');
 //履歴画面
 Route::get('money/show','Tbl_MoneyController@show');
 
+/* 2021/03/19 Added by Suzuki @グラフ機能*/
+//Route::get('money/summary_month_for_ajax','Tbl_MoneyController@getData');
+//Route::get('money/summary/{selectedmonth}','Tbl_GraphController@summary_graph_month');
+Route::get('money/summary/{selectedmonth}','Tbl_GraphController@summary_graph_year');
+
+
+//グラフ画面　月ごと
+Route::get('money/summary','Tbl_GraphController@summary');
+
+
+//グラフ画面　年ごと
+Route::get('money/summary_yearly','Tbl_GraphController@summary_yearly');
+//Route::get('money/summary_yearly/{selectedmonth}','Tbl_GraphController@summary_graph_year');
+Route::get('money/summary_yearly/{selectedmonth}','Tbl_GraphController@summary_graph_allyear');
+
+//グラフ画面　週ごと
+//Route::get('money/summary_yearly/{selectedmonth}','Tbl_GraphController@summary_graph_year');
+Route::get('money/summary_weekly/{selectedmonth}','Tbl_GraphController@summary_graph_week');
+//Route::get('money/summary_weekly/{selectedmonth}','Tbl_MoneyController@AjaxGetDataWeekly');
+
+Route::get('money/summary_weekly','Tbl_GraphController@summary_weekly');
+
+//グラフ画面　日ごと
+Route::get('money/summary_daily','Tbl_GraphController@summary_daily');
+
+
 //Route::resource('money','Tbl_MoneyController');
 
 Route::get('/', function () {

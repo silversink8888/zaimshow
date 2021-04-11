@@ -79,8 +79,8 @@
 						@if($target == 'store')
 						
 							<td>						
-								<label>
-									<input type="file" name="file" class="js-upload-file">ファイルを選択
+								<label for="fileupload">
+									<input id="fileupload" type="file" name="file" class="js-upload-file">ファイルを選択
 								</label>
 								<div class="js-upload-filename">ファイル未選択</div>
 								<div class="fileclear js-upload-fileclear">選択ファイルをクリア</div>
@@ -90,8 +90,8 @@
 							<!-- 画像あり -->
 							@if($attachments_arr['path'] !='no')
 								<td>								
-									<label>
-										<input type="file" name="file" class="js-upload-file">ファイルを選択
+									<label for="fileupload">
+										<input id="fileupload" type="file" name="file" class="js-upload-file">ファイルを選択
 									</label>
 
 									<div class="js-upload-filename"></div>
