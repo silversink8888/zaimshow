@@ -201,6 +201,9 @@ class Tbl_MoneyController extends Controller{
 		$arr_money_category_sum = DB::table('tbl_money')
 						->select('dai_category',DB::raw('SUM(price) as total_price'))
 						->where('name', $this->user->name)
+						/* 2021/03/17 Added by Suzuki */
+						->where('buy_date','like', $this_month .'%')
+
 						->groupBy('dai_category')
 						->get();
 		return $arr_money_category_sum;

@@ -10,6 +10,8 @@
 /resources/views/@backup
 /resources/views/money/@money
 /resources/views/money/temp
+*@*
+.env@
 .env
 .env.backup
 .phpunit.result.cache

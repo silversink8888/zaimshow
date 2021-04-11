@@ -82,7 +82,7 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 	$.ajax({
 		type: 'GET',
 		cache: false,
-		url: '/money/summary/'+selectedmonth + select_day_style_pulldown,
+		url: '/money/summary_yearly/'+selectedmonth + select_day_style_pulldown,
 		dataType: 'json'
 	})
 
@@ -103,11 +103,11 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 
 			var len = 0;
 			len = response.length;
-		//	alert(response);
 		//	alert(len);
+
 		
 
-     	//来月
+     		//来月
 	//     	var next_month = new Date(date.getFullYear(), date.getMonth()+1);
 			var next_ym = selectedmonth.split("-");
 			var next_my_temp = new Date(next_ym[0],next_ym[1],01);
@@ -153,28 +153,35 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 
 
 
-
 			//選んだ月を「今月」のプルダウンに渡す
 
 			var yearMonthPulldown; //プルダウン表示用
 			var d = new Date();
 			var thisYear = d.getFullYear();//今年
 			var thisMonth = d.getMonth()+1;//今月
-			var thisYearMonth = thisYear + "-" + thisMonth;
-			var selected;
-			var startYear=2019;
+//			var thisYearMonth = thisYear + "-" + thisMonth;
+			var thisYearMonth = thisYear ;
 
-			for(var y=startYear; y<=thisYear+1; y++){
-				for(var m=1; m<=12; m++){
+			var startYear = 2019;
+			var endYear = thisYear+1;
+			var selected;
+			selectedmonth  = selectedmonth.slice( 0, 4 );
+			//alert(selectedmonth);
+
+			for(var y=startYear; y<=endYear; y++){
+				for(var m=1; m<=1; m++){
 
 					if(m<10){m = '0'+m;}//月を2桁
-					var pullym = y+"-"+m;
+//					var pullym = y+"-"+m;
+					var pullym = y;
+				//	alert(pullym);
 
 					if(selectedmonth == pullym){
 						selected = "selected";
 					}
 
-					yearMonthPulldown += "<option value='" + y + "-" + m + "'"+selected+">" + y + "年" + m + "月</option>" ;
+//					yearMonthPulldown += "<option value='" + y + "-" + m + "'"+selected+">" + y + "年" + m + "月</option>" ;
+					yearMonthPulldown += "<option value='" + y + "-'" + selected + ">" + y + "年</option>" ;
 					selected='';//初期化
 				}
 			}
@@ -188,16 +195,19 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 	     	//$("#ympicker").append(this_month);
 
 			//先月ボタン
-			var last_month_html = "<input type='hidden' id='last_ympicker' name='last_ympicker' value='" + last_month + "'>";
-			$("#last_month_data").append(last_month_html);
+			//var last_month_html = "<input type='hidden' id='last_ympicker' name='last_ympicker' value='" + last_month + "'>";
+			//$("#last_month_data").append(last_month_html);
 
 			//来月ボタン
-			var next_month_html = "<input type='hidden' id='next_ympicker' name='next_ympicker' value='" + next_month + "'>";
-			$("#next_month_data").append(next_month_html);
+			//var next_month_html = "<input type='hidden' id='next_ympicker' name='next_ympicker' value='" + next_month + "'>";
+			//$("#next_month_data").append(next_month_html);
 
 
 
 
+	//        }else{
+	//        }
+	
 
 		})
 
@@ -207,17 +217,16 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 	    //データ取得成功時
 		/**********************************************************/
 		.done((response) => {
-		    //alert("データあり");
+		    //alert("responseあり");
 
-			/******************************************************************************************/
-			//当月　購入額グラフ
-			/******************************************************************************************/
-
+			/***************************************************************************/
+			/*グラフ作成 ****************************************************************/
+			/***************************************************************************/
 			var len=0;
 			len = response.length;
 			//alert(len);
-
-
+			var selectedyear = selectedmonth.slice( 0, 4 );
+			//alert('selectedyear :'+selectedyear);
 
 			var dai_category = '';
 
@@ -240,12 +249,11 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 
 			//alert(selectedmonth);
 
-
 			//購入金額のカテゴリ分け
 			for(var i=0; i<len; i++){
-				
-				//該当年月
-				if(selectedmonth == response[i].buy_date.slice( 0, 7 )){
+
+				//該当年
+				if(selectedmonth == response[i].buy_date.slice( 0, 4 )){
 
 
 					if(response[i].dai_category == '01'){
@@ -280,7 +288,7 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 					}else if(response[i].dai_category == '15'){
 						sonota_price = parseInt(sonota_price) + parseInt(response[i].price);
 					}
-
+				
 				}
 
 
@@ -289,30 +297,31 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 			//グラフの種類選択処理
 			if(select_day_style_pulldown == "1"){
 				var graph_style = "bar";
+				var scales_display = true;
+
 			}else if(select_day_style_pulldown == "2"){
 				var graph_style = "pie";
+				var scales_display = false;
 			}else if(select_day_style_pulldown == "3"){
 				var graph_style = "doughnut";
+				var scales_display = false;
 			}else if(select_day_style_pulldown == "4"){
 				var graph_style = "polarArea";
+				var scales_display = false;
 			}else if(select_day_style_pulldown == "5"){
-				var graph_style = "line";
-			}else if(select_day_style_pulldown == "6"){
 				var graph_style = "radar";
+				var scales_display = false;
 			}else{
 				var graph_style = "bar";
+				var scales_display = true;
 			}
+
 			//alert(graph_style);
 			//alert(select_day_style_pulldown);
 
 
-
-			var app_graph = new Vue({
-				el: '#app_graph',
-				mounted: function(){
-				var ctx = document.getElementById('myChart').getContext('2d');
-
-				var myChart = new Chart(ctx, {
+			// グラフのタイプとか値とかを設定
+			var config = {
 				type: graph_style,
 				data: {
 					labels: [
@@ -320,7 +329,7 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 						,"美容・衣類"
 						,"日用雑貨"
 						,"通信費"
-						,"エンタ"
+						,"エンタメ"
 						,"住居"
 						,"交通費"
 						,"交際費"
@@ -333,28 +342,7 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 						,"その他"
 					],
 					datasets: [{
-						backgroundColor: [
-							"#2ecc71"
-							,"#3498db"
-							,"#95a5a6"
-							,"#9b59b6"
-							,"#f1c40f"
-
-							,"#e74c3c"
-							,"#FF00FF"
-							,"#808000"
-							,"#CCFF33"
-							,"#00ff00"
-
-							,"#FF3333"
-							,"#20B2AA"
-							,"#2f4f4f"
-							,"#0000cd"
-							,"#000000"
-						],
-						
-						label: selectedmonth + ' カテゴリ別購入額',
-
+						label: selectedmonth +'年カテゴリ別購入額',
 						data: [
 							shokuhi_price
 							,biyou_price
@@ -371,77 +359,109 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 							,tax_price
 							,kadenn_price
 							,sonota_price
-							]
-						}]
+						],
+						backgroundColor: [
+							"rgba( 0, 204, 0, 0.5 )"
+							,"rgba( 0, 0, 255, 0.5 )"
+							,"rgba( 140, 128, 128, 0.55 )"
+							,"rgba( 128, 0, 128.35 )"
+							,"rgba( 255, 255, 0, 55 )"
+
+							,"rgba( 244, 79, 18, 55 )"
+							,"rgba( 245, 125, 167, 55 )"
+							,"rgba( 128, 0, 0, 0.55 )"
+							,"rgba( 255, 255, 0, 0.55 )"
+							,"rgba( 0, 255, 0, 0.55 )"
+
+							,"rgba( 255, 0, 0, 0.55 )"
+							,"rgba( 0, 128, 128, 75 )"
+							,"rgba( 0, 0, 0, 0.75 )"
+							,"rgba( 0, 0, 255, 0.5 )"
+							,"rgba( 0, 0, 0, 75 )"
+						]
+					}],
+				},
+				options: {
+					title: {
+						display: true,
+						text: selectedyear + '年分　カテゴリ別購入額', //グラフの見出し
 					},
-					options: {
-						title: {
-							display: false,
-							text: selectedyear + '年  月ごと購入額', //グラフの見出し
-							padding:3
-						},
-						scales: {
-							xAxes: [{
-								//stacked: true, //積み上げ棒グラフにする設定
-								display: true,      //表示設定
-								//barPercentage: 0.4,         //棒グラフ幅
-								categoryPercentage: 0.4,      //棒グラフ幅
-								scaleLabel: {                 //軸ラベル設定
-									display: false,            //表示設定
-									labelString: '横軸ラベル',  //ラベル
-									fontSize: 18               //フォントサイズ
-								},
-							}],
-							yAxes: [{
-								 // stacked: true, //積み上げ棒グラフにする設定
-								  display: true, //表示設定
-								  scaleLabel: {            //軸ラベル設定
-									display: false,        //表示設定
-									labelString: '(円)',  //ラベル
-									fontSize: 15          //フォントサイズ
-								},
-								ticks: {
-									min: 0,
-									callback: function(label, index, labels) {
-										return "￥" + label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
-									},
-									
-								},
-							}]
-						},
-						legend: {
-							labels: {
-								boxWidth:30,
-								padding:20 //凡例の各要素間の距離
-							},
-							display: true
-						},
-						tooltips:{
-							mode:'label', //マウスオーバー時に表示されるtooltip
-							callbacks: {
-								// マウスオーバーで３桁カンマ区切り 
-								label: function(tooltipItem, data){
-									return "￥" + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
-								},
+					
+					responsive: true,
+					legend: { display: false }, // 凡例を表示
+					tooltips:{
+						mode:'label', //マウスオーバー時に表示されるtooltip
+						callbacks: {
+							// マウスオーバーで３桁カンマ区切り 
+							label: function(tooltipItem, data){
+							return "￥" + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
 							},
 						},
-						layout: {
-							width:300,
-							height:300,
-							padding: {
-								//top: 50,
-								//bottom: 50,
-								left: 50,
-								right: 50,
-							}
-						},
-					}
-				});
+						
+					},
 
+					layout: {
+						padding: {
+							top: 50,
+							bottom: 50,
+							left: 10,
+							right: 10,
+						}
+					},
+					
+					scales: {                        //軸設定
+						yAxes: [{                    //y軸設定
+							display: scales_display, //表示設定
+							scaleLabel: {            //軸ラベル設定
+							   display: false,        //表示設定
+							   labelString: '(円)',  //ラベル
+							   fontSize: 15          //フォントサイズ
+							},
+							ticks: {         //最大値最小値設定
+								min: 0,      //最小値
+							//	max: 30,     //最大値
+							//	fontSize: 8, //フォントサイズ
+							//	stepSize: 5  //軸間隔
+							callback: function(label, index, labels) {
+								return "￥" + label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
+							},
 
+							},
+						}],
+						xAxes: [{                         //x軸設定
+							display: scales_display,      //表示設定
+							//barPercentage: 0.4,         //棒グラフ幅
+							categoryPercentage: 0.4,      //棒グラフ幅
+							scaleLabel: {                 //軸ラベル設定
+							   display: false,            //表示設定
+							   labelString: '横軸ラベル',  //ラベル
+							   fontSize: 18               //フォントサイズ
+							},
+							ticks: {
+								fontSize: 18             //フォントサイズ
+							},
+						}],
+					},
 				
+				},	
+
+			};
+			
+
+			var app_graph = new Vue({
+				el: '#app_graph',
+				mounted: function(){
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var myChart = new Chart(ctx, config);
 				}
 			});
+
+
+
+
+
+
+
 
 			/******************************************************************************************/
 			//年間　月別　購入額グラフ
@@ -460,11 +480,11 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 					category_cnt = '0' + category_cnt;
 				}
 				
-				for(month_cnt=1;month_cnt<=12;month_cnt++){
+				for(month_cnt=1;month_cnt<=4;month_cnt++){
 					if(month_cnt < 10){
 						month_cnt = '0' + month_cnt;
 					}
-					eval("var price_" + month_cnt + "_month_" + category_cnt + "= 0;");
+					eval("var price_" + month_cnt + "_year_" + category_cnt + "= 0;");
 				}
 
 			}
@@ -473,14 +493,17 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 
 			for(var i=0; i<len; i++){
 
-				//1月～12月
-				for(month_cnt=1;month_cnt<=12;month_cnt++){
+				//4年分
+				for(month_cnt=1;month_cnt<=4;month_cnt++){
 
 					if(month_cnt < 10){
 						month_cnt = '0' + month_cnt;
 					}
 
-					if(selectedyear+'-'+ month_cnt == response[i].buy_date.slice( 0, 7 )){
+					var year_cnt = month_cnt-1;
+
+//					if(selectedyear+'-'+ month_cnt == response[i].buy_date.slice( 0, 4 )){
+					if(selectedyear - year_cnt == response[i].buy_date.slice( 0, 4 )){
 
 						//カテゴリ毎に分類
 						for(cate=1;cate<=15;cate++){
@@ -489,7 +512,7 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 							}
 							//同カテゴリの金額合計処理
 							if(cate == response[i].dai_category){
-								eval( "price_"+month_cnt+"_month_" + cate + " = price_"+month_cnt+"_month_" + cate + " + " + parseInt(response[i].price) + ";");
+								eval( "price_"+month_cnt+"_year_" + cate + " = price_"+month_cnt+"_year_" + cate + " + " + parseInt(response[i].price) + ";");
 							}
 						}
 					}
@@ -511,18 +534,10 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 					type: 'bar',
 					data: {
 						labels: [
-							selectedyear + "年1月"
-							,selectedyear + "年2月"
-							,selectedyear + "年3月"
-							,selectedyear + "年4月"
-							,selectedyear + "年5月"
-							,selectedyear + "年6月"
-							,selectedyear + "年7月"
-							,selectedyear + "年8月"
-							,selectedyear + "年9月"
-							,selectedyear + "年10月"
-							,selectedyear + "年11月"
-							,selectedyear + "年12月"
+							selectedyear-3 + "年"
+							,selectedyear-2 + "年"
+							,selectedyear-1 + "年"
+							,selectedyear + "年"
 						],
 						datasets: [
 						{
@@ -530,92 +545,92 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 							borderWidth:1,
 							backgroundColor: "#2ecc71",
 							borderColor: "#121554",
-							data: [price_01_month_01, price_02_month_01, price_03_month_01, price_04_month_01, price_05_month_01, price_06_month_01, price_07_month_01 , price_08_month_01 , price_09_month_01 , price_10_month_01 , price_11_month_01, price_12_month_01 ]
+							data: [price_04_year_01,price_03_year_01,price_02_year_01,price_01_year_01]
 						},
 						{
 							label: "衣類",
 							borderWidth:1,
 							backgroundColor: "#3498db",
 							borderColor: "#1d3681",
-							data: [price_01_month_02, price_02_month_02, price_03_month_02, price_04_month_02, price_05_month_02, price_06_month_02, price_07_month_02 , price_08_month_02 , price_09_month_02 , price_10_month_02 , price_11_month_02, price_12_month_02 ]
+							data: [price_04_year_02,price_03_year_02,price_02_year_02,price_01_year_02]
 						},{
 							label: "雑貨",
 							borderWidth:1,
 							backgroundColor: "#95a5a6",
 							borderColor: "#2e70a7",
-							data: [price_01_month_03, price_02_month_03, price_03_month_03, price_04_month_03, price_05_month_03, price_06_month_03, price_07_month_03 , price_08_month_03 , price_09_month_03 , price_10_month_03 , price_11_month_03, price_12_month_03 ]
+							data: [price_04_year_03,price_03_year_03,price_02_year_03,price_01_year_03]
 						},{
 							label: "通信",
 							borderWidth:1,
 							backgroundColor: "#9b59b6",
 							borderColor: "#4eadc7",
-							data: [price_01_month_04, price_02_month_04, price_03_month_04, price_04_month_04, price_05_month_04, price_06_month_04, price_07_month_04 , price_08_month_04 , price_09_month_04 , price_10_month_04 , price_11_month_04, price_12_month_04 ]
+							data: [price_04_year_04,price_03_year_04,price_02_year_04,price_01_year_04]
 						},{
 							label: "エンタメ",
 							borderWidth:1,
 							backgroundColor: "#f1c40f",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_05, price_02_month_05, price_03_month_05, price_04_month_05, price_05_month_05, price_06_month_05, price_07_month_05 , price_08_month_05 , price_09_month_05 , price_10_month_05 , price_11_month_05, price_12_month_05 ]
+							data: [price_04_year_05,price_03_year_05,price_02_year_05,price_01_year_05]
 						},{
 							label: "住居",
 							borderWidth:1,
 							backgroundColor: "#e74c3c",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_06, price_02_month_06, price_03_month_06, price_04_month_06, price_05_month_06, price_06_month_06, price_07_month_06 , price_08_month_06 , price_09_month_06 , price_10_month_06 , price_11_month_06, price_12_month_06 ]
+							data: [price_04_year_06,price_03_year_06,price_02_year_06,price_01_year_06]
 						},{
 							label: "交通費",
 							borderWidth:1,
 							backgroundColor: "#FF00FF",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_07, price_02_month_07, price_03_month_07, price_04_month_07, price_05_month_07, price_06_month_07, price_07_month_07 , price_08_month_07 , price_09_month_07 , price_10_month_07 , price_11_month_07, price_12_month_07 ]
+							data: [price_04_year_07,price_03_year_07,price_02_year_07,price_01_year_07]
 						},{
 							label: "交際費",
 							borderWidth:1,
 							backgroundColor: "#808000",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_08, price_02_month_08, price_03_month_08, price_04_month_08, price_05_month_08, price_06_month_08, price_07_month_08 , price_08_month_08 , price_09_month_08 , price_10_month_08 , price_11_month_08, price_12_month_08 ]
+							data: [price_04_year_08,price_03_year_08,price_02_year_08,price_01_year_08]
 						},{
 							label: "教育",
 							borderWidth:1,
 							backgroundColor: "#CCFF33",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_09, price_02_month_09, price_03_month_09, price_04_month_09, price_05_month_09, price_06_month_09, price_07_month_09 , price_08_month_09 , price_09_month_09 , price_10_month_09 , price_11_month_09, price_12_month_09 ]
+							data: [price_04_year_09,price_03_year_09,price_02_year_09,price_01_year_09]
 						},{
 							label: "医療",
 							borderWidth:1,
 							backgroundColor: "#00ff00",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_10, price_02_month_10, price_03_month_10, price_04_month_10, price_05_month_10, price_06_month_10, price_07_month_10 , price_08_month_10 , price_09_month_10 , price_10_month_10 , price_11_month_10, price_12_month_10 ]
+							data: [price_04_year_10,price_03_year_10,price_02_year_10,price_01_year_10]
 						},{
 							label: "光熱費",
 							borderWidth:1,
 							backgroundColor: "#FF3333",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_11, price_02_month_11, price_03_month_11, price_04_month_11, price_05_month_11, price_06_month_11, price_07_month_11 , price_08_month_11 , price_09_month_11 , price_10_month_11 , price_11_month_11, price_12_month_11 ]
+							data: [price_04_year_11,price_03_year_11,price_02_year_11,price_01_year_11]
 						},{
 							label: "車",
 							borderWidth:1,
 							backgroundColor: "#20B2AA",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_12, price_02_month_12, price_03_month_12, price_04_month_12, price_05_month_12, price_06_month_12, price_07_month_12 , price_08_month_12 , price_09_month_12 , price_10_month_12 , price_11_month_12, price_12_month_12 ]
+							data: [price_04_year_12,price_03_year_12,price_02_year_12,price_01_year_12]
 						},{
 							label: "税金",
 							borderWidth:1,
 							backgroundColor: "#2f4f4f",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_13, price_02_month_13, price_03_month_13, price_04_month_13, price_05_month_13, price_06_month_13, price_07_month_13 , price_08_month_13 , price_09_month_13 , price_10_month_13 , price_11_month_13, price_12_month_13 ]
+							data: [price_04_year_13,price_03_year_13,price_02_year_13,price_01_year_13]
 						},{
 							label: "家電",
 							borderWidth:1,
 							backgroundColor: "#0000cd",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_14, price_02_month_14, price_03_month_14, price_04_month_14, price_05_month_14, price_06_month_14, price_07_month_14 , price_08_month_14 , price_09_month_14 , price_10_month_14 , price_11_month_14, price_12_month_14 ]
+							data: [price_04_year_14,price_03_year_14,price_02_year_14,price_01_year_14]
 						},{
 							label: "その他",
 							borderWidth:1,
 							backgroundColor: "#000000",
 							borderColor: "#a7d8bf",
-							data: [price_01_month_15, price_02_month_15, price_03_month_15, price_04_month_15, price_05_month_15, price_06_month_15, price_07_month_15 , price_08_month_15 , price_09_month_15 , price_10_month_15 , price_11_month_15, price_12_month_15 ]
+							data: [price_04_year_15,price_03_year_15,price_02_year_15,price_01_year_15]
 						}
 					
 					]
@@ -623,14 +638,15 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 					},
 					options: {
 						title: {
-							display: true,
-							text: selectedyear + '年  月ごと購入額', //グラフの見出し
+							display: false,
+							text: '過去4年分購入額', //グラフの見出し
 							padding:3
 						},
 						scales: {
 							xAxes: [{
 								stacked: true, //積み上げ棒グラフにする設定
-								display: true,      //表示設定
+								categoryPercentage:0.4 ,//棒グラフの太さ
+								display: scales_display,      //表示設定
 								//barPercentage: 0.4,         //棒グラフ幅
 								categoryPercentage: 0.4,      //棒グラフ幅
 								scaleLabel: {                 //軸ラベル設定
@@ -639,10 +655,10 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 									fontSize: 18               //フォントサイズ
 								},
 							}],
-							yAxes: [{
-								  stacked: true, //積み上げ棒グラフにする設定
-								  display: true, //表示設定
-								  scaleLabel: {            //軸ラベル設定
+							yAxes: [{ //y軸設定
+								stacked: true ,//積み上げ棒グラフにする設定
+								display: true, //表示設定
+								scaleLabel: {            //軸ラベル設定
 									display: false,        //表示設定
 									labelString: '(円)',  //ラベル
 									fontSize: 15          //フォントサイズ
@@ -652,9 +668,8 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 									callback: function(label, index, labels) {
 										return "￥" + label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
 									},
-									
-								},
-								
+		
+									},
 							}]
 						},
 						legend: {
@@ -665,18 +680,14 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 							display: true
 						},
 						tooltips:{
-						mode:'label', //マウスオーバー時に表示されるtooltip
-						filter: function (item, data) {
-							// 値が 0 より大きいものだけを表示
-							return (item.yLabel > 0);
-						},
-						callbacks: {
-							// マウスオーバーで３桁カンマ区切り 
-							label: function(tooltipItem, data){
+							mode:'label', //マウスオーバー時に表示されるtooltip
+							callbacks: {
+								// マウスオーバーで３桁カンマ区切り 
+								label: function(tooltipItem, data){
 								return "￥" + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ;
+								},
 							},
-						},
-
+							
 						},
 						layout: {
 							width:300,
@@ -695,6 +706,8 @@ function fetchRecords(selectedmonth,select_day_style_pulldown){
 				
 				}
 			});
+
+
 
 
 
